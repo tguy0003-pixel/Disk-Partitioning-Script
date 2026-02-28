@@ -8,22 +8,23 @@ Built for and tested primarily on Dell enterprise machines.
 
 CORE FEATURES
 
-• AUTOMATED DISK WIPING (WITH FALLBACK):
-Cleans and partitions the primary drive (GPT/UEFI) to prep it for imaging. If it detects a failure on Disk 0, it automatically falls back and attempts to partition Disk 1.
-(Note: While the fallback could theoretically target the removable boot drive, WinPE natively protects the active USB from being wiped).
+• INTERACTIVE OPERATION MENU:
+Allows technicians to select between "Full Staging" (Network, Asset Details, Disk Wipe), "Wipe Only" (skips checks and goes straight to the wipe), or "Asset Details Only" (gathers specs and exits without wiping).
+
+• AUTOMATED DISK WIPING:
+Cleans and partitions the primary drive (Disk 0 - GPT/UEFI) to prep it for imaging.
 
 • HARDWARE INFO CAPTURE:
-Pulls crucial system specs directly from the BIOS and displays them for the technician. This includes the Serial Number, CPU, RAM, Disk Size, and Asset Tag.
-(Note: Only the wired MAC address can be retrieved from outside the Windows environment).
+Pulls crucial system specs directly from the BIOS and displays them for the technician. This includes the Serial Number, Model, CPU, dynamically calculated RAM, Disk Size, and Asset Tag.
 
 • PRE-DEPLOYMENT NETWORK CHECKS:
-Pings out to ensure the ethernet drop is actually active before imaging begins, preventing SCCM task sequences from failing halfway through.
+Pings out to ensure the ethernet drop is actually active before imaging begins. It automatically retries up to 4 times before halting and giving the technician options to bypass or reboot.
 
 • ASSET TAG VALIDATION:
-Checks the BIOS for a valid organizational Asset Tag. If the tag is blank or shows a generic OEM template (e.g., "To Be Filled By O.E.M."), the script pauses and prompts the technician to fix it before continuing.
+Checks the BIOS for a valid organizational Asset Tag. If the tag is blank or shows a generic OEM template (e.g., "To Be Filled By O.E.M."), the script pauses and prompts the technician to reboot directly into the BIOS to fix it.
 
-• USB DRIVE PROTECTION:
-Sometimes WinPE incorrectly assigns the C: drive letter to the bootable USB. The script checks for this immediately and halts execution to prevent it from accidentally wiping the deployment drive.
+• USB DRIVE PROTECTION & AUTO-REMAP:
+Sometimes WinPE incorrectly assigns the C: drive letter to the bootable USB. The script checks for this immediately, attempts to automatically remap the USB volume to E:, and executes a safe system reboot to prevent accidental wipes.
 
 DEPLOYMENT & SETUP
 
@@ -42,6 +43,8 @@ Example: Type D: and press Enter.
 
 STEP 4: Run the script by typing dp.bat and pressing Enter.
 
-STEP 5: Review the hardware info on the screen, update your ticketing system with the MAC addresses, and follow the prompts to proceed with the disk wipe.
+STEP 5: Select your desired operation mode from the Main Menu (1, 2, or 3).
+
+STEP 6: Review the hardware info on the screen, update your ticketing system, and follow the prompts to proceed with the disk wipe.
 
 Note: This script uses diskpart clean to wipe internal drives. It is built strictly for IT staging environments where data destruction is the intended goal. Please use carefully.
