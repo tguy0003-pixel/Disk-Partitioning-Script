@@ -94,7 +94,7 @@ call :LogAndEcho ""
 color 0B
 call :LogAndEcho "###############################################################"
 call :LogAndEcho "# ACTION REQUIRED: Update the asset in TDX before continuing. #"
-call :LogAndEcho "# Wireless Mac Address Will Not Populate outside Windows.     #"
+call :LogAndEcho "#   Wireless Mac Address Will Not Populate outside Windows    #"
 call :LogAndEcho "###############################################################"
 call :LogAndEcho ""
 PAUSE
@@ -164,7 +164,6 @@ call :LogAndEcho "# SUCCESS: The script completed on DISK %TargetDisk%."
 call :LogAndEcho "###############################################################"
 call :LogAndEcho "# ACTION REQUIRED: If an object exists in AD for this device  #"
 call :LogAndEcho "# then it must be removed before imaging can begin.           #"
-call :LogAndEcho "#               Message RigidWare for Removal                 #"
 call :LogAndEcho "###############################################################"
 call :LogAndEcho ""
 call :LogAndEcho ""
@@ -212,4 +211,5 @@ GOTO EndScript
 
 :EndScript
 ENDLOCAL
+
 
